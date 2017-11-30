@@ -40,7 +40,7 @@ public class ApiHandler {
         return null;
     }
 
-    public Game searchGame(String name){
+    public Game[] searchGame(String name){
         HttpResponse<JsonNode> response = null;
         try {
             response = Unirest.get("https://api-2445582011268.apicast.io/games/?search=" + name + "&fields=*")
@@ -53,7 +53,7 @@ public class ApiHandler {
             if(games.length < 1){
                 return null;
             }
-            else return games[0];
+            else return games;
         } catch (UnirestException e) {
             e.printStackTrace();
         }

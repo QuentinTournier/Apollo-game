@@ -10,8 +10,13 @@
                     <img src="https://vignette.wikia.nocookie.net/fantendo/images/e/e5/Super_Mario_!.png"/>
                 </div>
                 <div class="col-md-9">
+                    <div th:if="${isSearch}" class="btn-group">
+                        <div class="alert alert-info">
+                            <p th:text="'Résultats pour ' + ${gameSearched}"></p>
+                        </div>
+                    </div>
                     <div th:if="${notFound}" class="btn-group">
-                        <div>Désolé mais nous n'avons pas trouvé le jeu que vous recherchez</div>
+                        <div class="alert alert-danger">Désolé mais nous n'avons pas trouvé le jeu que vous recherchez</div>
                     </div>
                     <div class="container">
                         <div class="jumbotron" th:each="game : ${games}">

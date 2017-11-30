@@ -34,15 +34,17 @@ public class MainController {
     public String searchGame(Model model, @ModelAttribute Game gameSearched) {
 
         model.addAttribute("search",new Game());
-        Game game = apiHandler.searchGame(gameSearched.getName());
-        if(game == null){
+        model.addAttribute("isSearch",true);
+        model.addAttribute("gameSearched",gameSearched.getName());
+        Game[] games = apiHandler.searchGame(gameSearched.getName());
+        if(games == null){
             //redirect could be done
             model.addAttribute("notFound",true);
             model.addAttribute("games",apiHandler.getAllGames());
             return "allGames";
         }else{
-            model.addAttribute("game",game);
-            return "gameDetails";
+            model.addAttribute("games",games);
+            return "allGames";
         }
     }
 
