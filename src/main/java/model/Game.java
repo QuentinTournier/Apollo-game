@@ -4,7 +4,7 @@ public class Game {
 
     private int id;
     private String name;
-    private String url;
+    private String url = "";
     private Float total_rating;
     private Cover cover;
 

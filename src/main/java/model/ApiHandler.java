@@ -6,6 +6,9 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class ApiHandler {
     private final String API_KEY = "6afe490665abcb64d04ffb0f0e384df6";
 
@@ -26,13 +29,14 @@ public class ApiHandler {
 
     public Game[] getAllGames(){
         HttpResponse<JsonNode> response = null;
+        int limit = 10;
         try {
-            response = Unirest.get("https://api-2445582011268.apicast.io/games/?fields=*")
+            response = Unirest.get("https://api-2445582011268.apicast.io/games/?fields=*&limit=" + limit)
                     .header("user-key", API_KEY)
                     .header("Accept", "application/json")
                     .asJson();
 
-        Gson gson = new Gson();
+            Gson gson = new Gson();
             return gson.fromJson(String.valueOf(response.getBody()), Game[].class);
         } catch (UnirestException e) {
             e.printStackTrace();
@@ -43,7 +47,8 @@ public class ApiHandler {
     public Game[] searchGame(String name){
         HttpResponse<JsonNode> response = null;
         try {
-            response = Unirest.get("https://api-2445582011268.apicast.io/games/?search=" + name + "&fields=*")
+            String nameSearch = URLEncoder.encode(name, "UTF-8");
+            response = Unirest.get("https://api-2445582011268.apicast.io/games/?search=" + nameSearch + "&fields=*")
                     .header("user-key", API_KEY)
                     .header("Accept", "application/json")
                     .asJson();
@@ -55,6 +60,8 @@ public class ApiHandler {
             }
             else return games;
         } catch (UnirestException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return null;
