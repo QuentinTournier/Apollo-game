@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:include="fragments/header :: header">
+</head>
+<body>
+
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="https://vignette.wikia.nocookie.net/fantendo/images/e/e5/Super_Mario_!.png"/>
+                </div>
+                <div class="col-md-9">
+                    <div th:if="${notFound}" class="btn-group">
+                        <div>Désolé mais nous n'avons pas trouvé le jeu que vous recherchez</div>
+                    </div>
+                    <div class="container">
+                        <div class="jumbotron" th:each="game : ${games}">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <a th:href="@{/game/{id}(id=${game.id})}"><img th:src="${game.cover.url}"/></a>
+                                </div>
+                                <div class="col-md-10">
+                                    <h2><a th:text="${game.name}" th:href="@{/game/{id}(id=${game.id})}"></a></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+        <div lang="en" th:include="fragments/footer :: footer"></div>
+</html>
